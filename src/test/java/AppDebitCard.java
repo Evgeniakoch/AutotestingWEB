@@ -50,6 +50,7 @@ public class AppDebitCard {
     void inputInvalidName() {
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Ivanova Svetlana");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79523582565");
+        driver.findElement(By.cssSelector("[data-test-id='agreement'] span")).click();
         driver.findElement(By.tagName("button")).click();
         String expected = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
         String actual = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim();
@@ -60,6 +61,7 @@ public class AppDebitCard {
     void emptySquareName() {
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79523582565");
+        driver.findElement(By.cssSelector("[data-test-id='agreement'] span")).click();
         driver.findElement(By.tagName("button")).click();
         String expected = "Поле обязательно для заполнения";
         String actual = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim();
