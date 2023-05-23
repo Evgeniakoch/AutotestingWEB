@@ -36,7 +36,7 @@ public class AppDebitCard {
     }
 
     @Test
-    void  positiveE2ETest() {
+    void positiveE2ETest() {
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванова Светлана");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79523582565");
         driver.findElement(By.cssSelector("[data-test-id='agreement'] span")).click();
@@ -76,6 +76,40 @@ public class AppDebitCard {
         String expected = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
         String actual = driver.findElement(By.cssSelector("[data-test-id=phone].input_invalid .input__sub")).getText().trim();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void emptySquarePhone() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванова Светлана");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("");
+        driver.findElement(By.cssSelector("[data-test-id='agreement'] span")).click();
+        driver.findElement(By.tagName("button")).click();
+        String expected = "Поле обязательно для заполнения";
+        String actual = driver.findElement(By.cssSelector("[data-test-id=phone].input_invalid .input__sub")).getText().trim();
+        assertEquals(expected, actual);
+
+    }
+    @Test
+    void notCompletePhone() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванова Светлана");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79623584");
+        driver.findElement(By.cssSelector("[data-test-id='agreement'] span")).click();
+        driver.findElement(By.tagName("button")).click();
+        String expected = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
+        String actual = driver.findElement(By.cssSelector("[data-test-id=phone].input_invalid .input__sub")).getText().trim();
+        assertEquals(expected, actual);
+
+    }
+    @Test
+    void phoneNumberOverLimit() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванова Светлана");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+796235845365");
+        driver.findElement(By.cssSelector("[data-test-id='agreement'] span")).click();
+        driver.findElement(By.tagName("button")).click();
+        String expected = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
+        String actual = driver.findElement(By.cssSelector("[data-test-id=phone].input_invalid .input__sub")).getText().trim();
+        assertEquals(expected, actual);
+
     }
 
 }
