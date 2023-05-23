@@ -89,6 +89,7 @@ public class AppDebitCard {
         assertEquals(expected, actual);
 
     }
+
     @Test
     void notCompletePhone() {
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванова Светлана");
@@ -100,6 +101,7 @@ public class AppDebitCard {
         assertEquals(expected, actual);
 
     }
+
     @Test
     void phoneNumberOverLimit() {
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванова Светлана");
@@ -112,4 +114,16 @@ public class AppDebitCard {
 
     }
 
+    @Test
+    void cardFormWithoutCheckbox() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванова Светлана");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79623584536");
+        driver.findElement(By.tagName("button")).click();
+
+        String expected = "Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй";
+        String actual = driver.findElement(By.cssSelector("[data-test-id=agreement].input_invalid .checkbox__text")).getText().trim();
+
+        assertEquals(expected, actual);
+
+    }
 }
