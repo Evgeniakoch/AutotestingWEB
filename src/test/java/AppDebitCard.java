@@ -26,6 +26,7 @@ public class AppDebitCard {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
+        driver.get("http://localhost:9999");
     }
 
     @AfterEach
@@ -36,7 +37,6 @@ public class AppDebitCard {
 
     @Test
     void  positiveE2ETest() {
-        driver.get("http://localhost:9999");
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванова Светлана");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79523582565");
         driver.findElement(By.cssSelector("[data-test-id='agreement'] span")).click();
@@ -48,8 +48,8 @@ public class AppDebitCard {
 
     @Test
     void inputInvalidName() {
-        driver.get("http://localhost:9999");
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Ivanova Svetlana");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79523582565");
         driver.findElement(By.tagName("button")).click();
         String expected = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
         String actual = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim();
@@ -58,8 +58,8 @@ public class AppDebitCard {
 
     @Test
     void emptySquareName() {
-        driver.get("http://localhost:9999");
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79523582565");
         driver.findElement(By.tagName("button")).click();
         String expected = "Поле обязательно для заполнения";
         String actual = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim();
@@ -68,7 +68,6 @@ public class AppDebitCard {
 
     @Test
     void inputInvalidPhone() {
-        driver.get("http://localhost:9999");
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванова Светлана");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("89523582565");
         driver.findElement(By.tagName("button")).click();
